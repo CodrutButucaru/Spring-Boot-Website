@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+        table {
+            margin-top: 20px;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .modal-header {
+            background-color: #f7f7f7;
+        }
+        .modal-content {
+            border-radius: 0.5rem;
+        }
+        .modal-footer {
+            background-color: #f7f7f7;
+        }
+        .page-top {
+            margin-left: 250px; /* Adjust based on your sidebar's width */
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body id="page-top">
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <div class="input-group" style="width: 30%; margin-bottom: 20px;">
+                    <form th:action = "@{/search-products/0}" method = "get">
+                        <input type="text" class="form-control rounded" placeholder="Search" name = "keyword" aria-label="Search"
+                               aria-describedby="search-addon" />
+                        <button type="submit" class="btn btn-outline-primary">search</button>
+                    </form>
+                </div>
+                <a th:href="@{/add-product}" class = "btn btn-primary">Add Product</a>
+                <p th:if="${size == 0} ">No Products</p>
+                <div th:if = "${success}" class = "text-center alert alert-success">
+                    <p th:text = "${success}"></p>
+                </div>
+                <div th:if = "${error}" class="text-center alert alert-danger">
+                    <p th:text = "${error}"></p>
+                </div>
+                <table class="table table-bordered" th:if = "${size > 0}">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Update</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each = "product : ${products}">
+                        <th scope="row" th:text = "${product.name}"></th>
+                        <td th:text = "${product.category.name}"></td>
+                        <td th:text = "${product.costPrice}"></td>
+                        <td th:text = "${product.currentQuantity}"></td>
+                        <td>
+                            <img class = "my-product-image" style="height: 40px; width: 40px;" alt=""
+                                 th:src="'data:image/jpeg;base64,' + ${product.image}">
+                        </td>
+                        <td><a th:href="@{/update-product/{id}(id= ${product.id})}" class="btn btn-primary">Update</a></td>
+                        <td>
+                            <a th:if="${product.deleted} == true" th:href="@{/enable-product(id = ${product.id})}"
+                               class="btn btn-primary">Enable</a>
+                            <a th:if="${product.deleted} == false" th:href="@{/delete-product(id = ${product.id})}"
+                               class=" btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                <!--Pagination  -->
+                <nav aria-label="...">
+                    <ul class="pagination" >
+                        <li th:if= "${currentPage != 0}" class="page-item ">
+                            <a th:href = "@{'/products/' + ${currentPage - 1}}" class="page-link">Previous</a>
+                        </li >
+                        <li th:each = "i : ${#numbers.sequence(1, totalPages)}" th:classappend = "${currentPage == i - 1 ? 'active' : ''}" class="page-item">
+                            <a th:href = "@{'/products/' + ${i - 1}}" class="page-link" href="#">
+				     <span th:text = "${i}">
+				     </span></a></li>
+                        <li th:if = "${currentPage + 1 != totalPages}" class="page-item">
+                            <a th:href = "@{'/products/' + ${currentPage + 1}}" class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+                <!--Pagination  -->
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

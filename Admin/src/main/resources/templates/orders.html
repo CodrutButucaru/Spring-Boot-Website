@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+        table {
+            margin-top: 20px;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .modal-header {
+            background-color: #f7f7f7;
+        }
+        .modal-content {
+            border-radius: 0.5rem;
+        }
+        .modal-footer {
+            background-color: #f7f7f7;
+        }
+        .page-top {
+            margin-left: 250px; /* Adjust based on your sidebar's width */
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body id="page-top">
+
+            <!-- Begin Page Content -->
+            <div th:if="${success}" class="text-center alert alert-success">
+                <p th:text="${success}">
+                </p>
+            </div>
+            <div class="table-main table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="order-date">Order Date</th>
+                        <th>Delivery Date</th>
+                        <th class="price-pr">Order Status</th>
+                        <th class="quantity-box">Total Price</th>
+                        <th class="total-pr">Payment Method</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td class="order-date">
+                            <span><b>[(${order.orderDate})]</b></span>
+                        </td>
+                        <td class="name-pr" th:if="${order.accept == true}">
+                            <a href="#">
+                                [(${order.deliveryDate})]
+                            </a>
+                        </td>
+                        <td class="price-pr">
+                            <p th:text="${order.orderStatus}"></p>
+                        </td>
+                        <td class="quantity-box" th:text="${order.quantity}"></td>
+                        <td class="total-pr">
+                            <p style="color: red">$ [(${order.totalPrice})]</p>
+                        </td>
+                        <td class="total-pr" style="color: black">
+                            <span></span>[(${order.paymentMethod})]</span>
+                        </td>
+                        <td>
+                            <a th:if="${order.accept} != false"  th:href="@{/cancel-order(id = ${order.id})}"
+                               class="btn btn-primary">Cancel</a>
+                            <a th:if="${order.accept} == false" th:href="@{/accept-order(id = ${order.id})}"
+                               class=" btn btn-secondary">Accept</a>
+                        </td>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- End of Main Content -->
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+    </div>
+</div>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
