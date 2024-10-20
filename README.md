@@ -1,0 +1,6 @@
+![Spring Framework](https://img.shields.io/badge/Spring%20Framework-5.x-brightgreen?logo=spring)
+![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-2.x-blue?logo=spring)
+![Hibernate](https://img.shields.io/badge/Hibernate-5.x-red?logo=hibernate)
+![Maven](https://img.shields.io/badge/Maven-3.x-orange?logo=apache-maven)
+![OOP](https://img.shields.io/badge/OOP-Principles-yellow)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?logo=javascript)
